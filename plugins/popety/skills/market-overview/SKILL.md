@@ -39,7 +39,8 @@ Summarise current market conditions (asking prices and transaction trends) for <
                               aggs: { median_per_m2: { percentiles: { field: "price_per_square_meter", percents: [50] } } } } } }
    Extract: inventory count, asking price per m², median price per room count, type mix, new-construction share and its per-m² premium vs resale.
 
-3. TRANSACTION ACTIVITY (one call, two aggs)
+3. TRANSACTION ACTIVITY (coverage-gated — one call, two aggs)
+   Land-registry transactions are indexed ONLY for French-speaking cantons and Ticino (VD, GE, VS, FR, NE, JU, TI). If <municipality> is not in one of these cantons, SKIP this step and omit the transactions section entirely (do not report it as missing data). Registered prices are published only in GE, NE and JU — everywhere else report volume and type mix only, never price statistics.
    Call entity_stats with:
    { entity_type: "transactions", filters: { municipality: "<municipality>" },
      aggs: { by_year: { date_histogram: { field: "transaction_date", calendar_interval: "year" },
@@ -49,7 +50,7 @@ Summarise current market conditions (asking prices and transaction trends) for <
 4. SUMMARY — present as a compact market dashboard
    - Rental: active inventory, asking rent/m² range, median rent by rooms, type mix
    - Sale: active inventory, asking price/m² range, median price by rooms, new-build share + premium
-   - Transactions: count per year (last 5), price trend (rising/stable/falling), mix of sale vs inheritance/transfer types
+   - Transactions (covered cantons only): count per year (last 5), price trend (GE/NE/JU only), mix of sale vs inheritance/transfer types
    Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised). Offer deeper dives: /popety:development-activity for the construction pipeline, /popety:investment-yield for a specific property.
 
 ---
