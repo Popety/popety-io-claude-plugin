@@ -1,0 +1,41 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "$comment": "GENERATED FROM api/popety-mcp/src/prompts.ts — do not edit; run pnpm --filter @popety-io/mcp generate:integrations",
+  "name": "popety-marketplace",
+  "owner": {
+    "name": "Popety.io",
+    "email": "support@popety.io",
+    "url": "https://popety.io"
+  },
+  "description": "Popety.io plugin marketplace — Swiss real-estate intelligence workflows for Claude.",
+  "version": "1.0.0",
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "popety",
+      "displayName": "Popety.io",
+      "source": "popety",
+      "description": "Swiss real-estate intelligence: 9 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Popety.io"
+      },
+      "homepage": "https://developers.popety.io",
+      "repository": "https://github.com/Popety/popety-io-claude-plugin",
+      "license": "MIT",
+      "category": "productivity",
+      "keywords": [
+        "swiss",
+        "real-estate",
+        "proptech",
+        "cadastre",
+        "valuation",
+        "zoning",
+        "mcp"
+      ],
+      "defaultEnabled": true
+    }
+  ]
+}
