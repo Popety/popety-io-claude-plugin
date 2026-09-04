@@ -9,14 +9,16 @@
   },
   "description": "Popety.io plugin marketplace — Swiss real-estate intelligence workflows for Claude.",
   "version": "1.0.0",
-  "metadata": {
-    "pluginRoot": "./plugins"
-  },
   "plugins": [
     {
       "name": "popety",
       "displayName": "Popety.io",
-      "source": "popety",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Popety/popety-io-claude-plugin.git",
+        "path": "plugins/popety",
+        "ref": "main"
+      },
       "description": "Swiss real-estate intelligence: 9 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
       "version": "1.0.0",
       "author": {
