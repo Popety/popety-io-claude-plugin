@@ -27,7 +27,12 @@ Build a livability and investment-context profile for the neighborhood around "<
    { target: { land_id: <land_id> }, topics: ["demographics", "employment", "taxes",
      "transport", "noise", "hazards", "electricity", "accessibility"] }
 
-3. STRUCTURED PROFILE
+3. WHAT IS ACTUALLY NEARBY (one call, 1 credit)
+   Call pois_nearby with the parcel coordinates from step 1's response:
+   { lat: <lat>, lon: <lon> }
+   Summary mode returns nine scored amenity categories (schools, shops, transit, health, …) with the nearest examples.
+
+4. STRUCTURED PROFILE
    Present one section per theme:
    - People: population, median income, average household size (demographics)
    - Economy: employment figures (employment)
@@ -36,6 +41,7 @@ Build a livability and investment-context profile for the neighborhood around "<
    - Quiet or noisy: road/rail noise in dB (noise)
    - Risks: flood/landslide/avalanche hazard levels (hazards)
    - Running costs: electricity tariff (electricity)
+   - Daily life nearby: strongest and weakest amenity categories with the nearest concrete examples (pois_nearby)
    Close with a short livability / investment-context verdict grounded ONLY in the returned data — flag any topic that came back empty rather than guessing.
 
 ---

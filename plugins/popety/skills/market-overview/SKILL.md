@@ -51,7 +51,7 @@ Summarise current market conditions (asking prices and transaction trends) for <
    - Rental: active inventory, asking rent/m² range, median rent by rooms, type mix
    - Sale: active inventory, asking price/m² range, median price by rooms, new-build share + premium
    - Transactions (covered cantons only): count per year (last 5), price trend (GE/NE/JU only), mix of sale vs inheritance/transfer types
-   Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised). Offer deeper dives: /popety:development-activity for the construction pipeline, /popety:investment-yield for a specific property.
+   Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised). Offer deeper dives: /popety:find-development-sites to source under-exploited parcels, /popety:investment-yield for a specific property.
 
 ---
 

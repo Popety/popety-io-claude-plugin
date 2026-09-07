@@ -39,7 +39,6 @@ via OAuth or a Popety API key (manage keys at https://developers.popety.io).
 | `/popety:value-estimate` | AVM valuation with user-confirmed attributes, cross-checked against the market. |
 | `/popety:find-development-sites` | Hunt under-exploited parcels with development potential in a commune or canton. |
 | `/popety:neighborhood-profile` | Demographics, taxes, transport, noise and hazards around an address. |
-| `/popety:development-activity` | Construction permits, transactions and new-build pulse of a commune. |
 | `/popety:investment-yield` | Gross-yield check: AVM purchase and rent estimates vs current asking rents. |
 | `/popety:listing-hunter` | Find active listings matching a client brief and build a shortlist. |
 
