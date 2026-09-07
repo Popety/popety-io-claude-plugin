@@ -26,6 +26,7 @@ Generate a concise land-registry report for the Swiss parcel at "<address>". Fol
 2. LOAD ALL LAND DATA
    Call get_land with { land_id: "<land_id from step 1>", include: "all" }.
    This returns: cadastral area, zoning, owners, restrictions, recent permits, and recent transactions on this parcel.
+   The response's _omitted_sections lists the large market annexes (purchase_market, rental_market) that are NOT included by default — mention their availability in the report and fetch one explicitly (include: ["purchase_market"]) only if the user asks for market depth.
 
 3. REPORT
    Present a structured summary:
@@ -37,6 +38,9 @@ Generate a concise land-registry report for the Swiss parcel at "<address>". Fol
    - Recent permits: last 3 construction permits (type, date, status)
    - Recent transactions: last 3 transactions (type, date, price if disclosed)
    Keep the report concise — one section per bullet above.
+
+4. OFFER NEXT STEPS
+   Close with two concrete hand-offs: value this property (/popety:value-estimate) and market conditions for the commune (/popety:market-overview) — phrased as an offer, not run automatically.
 
 ---
 

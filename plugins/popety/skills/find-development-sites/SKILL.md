@@ -21,8 +21,9 @@ Find under-exploited parcels with development potential in <commune or canton>. 
 
 1. PREVIEW THE SEARCH (free)
    Call search_entities with:
-   { entity_type: "lands", filters: { municipality: "<commune or canton>", under_exploited_score_min: 60 },
+   { entity_type: "lands", filters: { municipality: "<commune or canton>", under_exploited_score_min: 60, no_building_zone: "hide" },
      sort: "under_exploited_score_desc", preview: true }
+   (no_building_zone: "hide" keeps only constructible parcels — never shortlist land in a no-building zone.)
    Note the object_count and cost — this search bills per returned object.
 
 2. RUN THE FULL SEARCH
