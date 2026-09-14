@@ -30,9 +30,9 @@ Estimate the market value of the Swiss property at "<address>". Follow these ste
    Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb, ... } }.
    Extract: estimated purchase price, estimated rent, price per m², and confidence band.
 
-4. CURRENT ASKING PRICES (cross-check — works everywhere)
-   Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "sale", active: true }, aggs: { asking: { stats: { field: "price_per_square_meter" } } } }.
-   Compare the estimate's price per m² to the current asking-price stats.
+4. CURRENT ASKING PRICES (cross-check — works everywhere, 0.50 credits)
+   Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "sale" }, section: "city_analysis" }.
+   (Sections take NO active/date/rooms filters — deal_type is required, property_type would be an array.) Read the city's price/m² stats and percentile fan (p25/p50/p75) and compare the estimate's price per m² to them. Figures span the full listing history, 2% trimmed — treat the median as an asking-level anchor.
 
 5. COMPARABLE TRANSACTIONS (only where recorded)
    Transaction records cover French-speaking cantons and Ticino; Zürich and most DE-CH areas have none — skip this step there and rely on the listings cross-check. Where covered, call search_entities with { entity_type: "transactions", filters: { municipality: <municipality>, date_from: "<2 years ago>", step_name: "sale" } } and select up to 5 comparables.

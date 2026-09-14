@@ -35,7 +35,7 @@ Shortlist current on-market sale listings in <municipality> for a client. Follow
    Repeat the call without preview, passing the query_id from step 2, sort: "listing_timestamp_desc", and limit: 10.
 
 4. CLIENT-READY SHORTLIST
-   Present each listing with: price, rooms, living area m², price per m², address, listing age (from listing_timestamp), and the url when present. Flag listings priced above the commune's asking median — optionally cross-check with entity_stats stats on price_per_square_meter (deal_type: "purchase", active: true).
+   Present each listing with: price, rooms, living area m², price per m², address, listing age (from listing_timestamp), and the url when present. Flag listings priced above the commune's asking median — optionally cross-check with entity_stats { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale" }, section: "price_per_room" } (0.50 credits) and compare each listing to the median of its room band (section figures span the full listing history, not only active ads).
 
 5. NEXT STEPS
    Offer to run the neighborhood_profile prompt on a favourite, or the value_estimate prompt to sanity-check an asking price.

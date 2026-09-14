@@ -30,9 +30,9 @@ Assess the gross rental yield of the Swiss property at "<address>". Follow these
    Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb } }.
    Extract: estimated purchase price, estimated monthly rent, and the gross yield band yield_pct_lower / yield_pct_upper.
 
-4. MARKET-RENT CONTEXT
-   Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "rent", active: true }, aggs: { asking_rent: { stats: { field: "price_per_square_meter" } } } }.
-   Compare the model rent per m² to current asking rents in the commune.
+4. MARKET-RENT CONTEXT (0.50 credits)
+   Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "rent" }, section: "city_analysis" }.
+   (Sections take NO active/date/rooms filters — deal_type is required.) Read the city's monthly rent per m² stats and percentile fan and compare the model rent per m² to them. Figures span the full listing history, 2% trimmed.
 
 5. PRESENT THE YIELD
    - Gross yield: <yield_pct_lower>% – <yield_pct_upper>% (from the estimate)

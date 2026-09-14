@@ -17,41 +17,44 @@ Asking-price levels and transaction trends for a Swiss commune.
 
 ## Workflow
 
-Summarise current market conditions (asking prices and transaction trends) for <municipality>. Each entity_stats call costs 1 flat credit and accepts SEVERAL named aggregations — bundle them as below (3 calls total). Follow these steps exactly:
+Summarise current market conditions (asking prices and transaction trends) for <municipality>. entity_stats on listings/transactions is SECTION-based: each call computes ONE curated section id and costs 0.50 credits (the 4 core calls below ≈ 2 credits; the optional 5th makes it 2.50). Listings section filters accept ONLY municipality / district / canton / postal_code / bbox + property_type (an ARRAY) + deal_type ("sale" | "rent", REQUIRED) — there are NO date_from / active / rooms / price filters; sections span the full listing history with server-side quarterly windows and 2% outlier trims. Follow these steps exactly:
 
-1. ACTIVE RENTAL MARKET (one call, three aggs)
+1. RENT LEVELS BY ROOM COUNT (one call, 0.50 cr)
    Call entity_stats with:
-   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "rent", active: true },
-     aggs: { rent_per_m2: { stats: { field: "price_per_square_meter" } },
-             by_rooms: { terms: { field: "rooms_nb", size: 12 },
-                         aggs: { median_rent: { percentiles: { field: "price", percents: [50] } } } },
-             by_category: { terms: { field: "property_category.keyword", size: 8 } } } }
-   Extract: inventory count, asking rent per m² (avg/min/max), median rent per room count, property-type mix.
+   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "rent" },
+     section: "price_per_room" }
+   Extract: all-rooms median/average rent, median rent per room band, and the property-type mix (per-type counts).
 
-2. ACTIVE SALE MARKET (one call, four aggs)
+2. SALE PRICE LEVELS PER M² (one call, 0.50 cr)
    Call entity_stats with:
-   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "purchase", active: true },
-     aggs: { sale_per_m2: { stats: { field: "price_per_square_meter" } },
-             by_rooms: { terms: { field: "rooms_nb", size: 12 },
-                         aggs: { median_price: { percentiles: { field: "price", percents: [50] } } } },
-             by_category: { terms: { field: "property_category.keyword", size: 8 } },
-             new_vs_resale: { terms: { field: "new_construction" },
-                              aggs: { median_per_m2: { percentiles: { field: "price_per_square_meter", percents: [50] } } } } } }
-   Extract: inventory count, asking price per m², median price per room count, type mix, new-construction share and its per-m² premium vs resale.
+   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale" },
+     section: "city_analysis" }
+   Extract: price/m² stats (avg/std-dev), the p5–p95 percentile fan, and the per-property-type median. (city_analysis works at municipality level; price_geography does NOT — it only drills below a canton or district filter.)
 
-3. TRANSACTION ACTIVITY (coverage-gated — one call, two aggs)
-   Land-registry transactions are indexed ONLY for French-speaking cantons and Ticino (VD, GE, VS, FR, NE, JU, TI). If <municipality> is not in one of these cantons, SKIP this step and omit the transactions section entirely (do not report it as missing data). Registered prices are published only in GE, NE and JU — everywhere else report volume and type mix only, never price statistics.
+3. NEW-BUILD VS RESALE (one call, 0.50 cr)
+   Call entity_stats with:
+   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale" },
+     section: "new_vs_resale" }
+   Extract: new vs existing counts, median price/m² for each (the new-build premium), and the recent quarterly counts.
+
+4. TRANSACTION TREND (coverage-gated — one call, 0.50 cr)
+   Land-registry transactions are indexed ONLY for French-speaking cantons and Ticino (VD, GE, VS, FR, NE, JU, TI). If <municipality> is not in one of these cantons, SKIP steps 4 and 5 and omit the transactions section entirely (do not report it as missing data). Registered prices are published only in GE, NE and JU — everywhere else report volume and type mix only, never price statistics.
    Call entity_stats with:
    { entity_type: "transactions", filters: { municipality: "<municipality>" },
-     aggs: { by_year: { date_histogram: { field: "transaction_date", calendar_interval: "year" },
-                        aggs: { price_stats: { stats: { field: "transaction_total_price" } } } },
-             by_type: { terms: { field: "transaction_step_name", size: 12 } } } }
+     section: "price_dynamics" }
+   Extract: per-year deal count and, in GE/NE/JU only, the median/average sold price and total volume.
 
-4. SUMMARY — present as a compact market dashboard
-   - Rental: active inventory, asking rent/m² range, median rent by rooms, type mix
-   - Sale: active inventory, asking price/m² range, median price by rooms, new-build share + premium
+5. TRANSACTION TYPE MIX (optional, same coverage gate — one call, 0.50 cr)
+   Call entity_stats with:
+   { entity_type: "transactions", filters: { municipality: "<municipality>" },
+     section: "transaction_types" }
+   Extract: share of true market sales vs inheritance/transfer types.
+
+6. SUMMARY — present as a compact market dashboard
+   - Rental: median rent by rooms, all-rooms median/average, type mix
+   - Sale: price/m² stats + percentile fan, per-type medians, new-build share + premium
    - Transactions (covered cantons only): count per year (last 5), price trend (GE/NE/JU only), mix of sale vs inheritance/transfer types
-   Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised). Offer deeper dives: /popety:find-development-sites to source under-exploited parcels, /popety:investment-yield for a specific property.
+   Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised, and section figures span the full listing history — read the latest quarters for the current picture). Offer deeper dives: /popety:find-development-sites to source under-exploited parcels, /popety:investment-yield for a specific property.
 
 ---
 
