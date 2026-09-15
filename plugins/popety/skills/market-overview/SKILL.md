@@ -17,17 +17,18 @@ Asking-price levels and transaction trends for a Swiss commune.
 
 ## Workflow
 
-Summarise current market conditions (asking prices and transaction trends) for <municipality>. entity_stats on listings/transactions is SECTION-based: each call computes ONE curated section id and costs 0.50 credits (the 4 core calls below ≈ 2 credits; the optional 5th makes it 2.50). Listings section filters accept ONLY municipality / district / canton / postal_code / bbox + property_type (an ARRAY) + deal_type ("sale" | "rent", REQUIRED) — there are NO date_from / active / rooms / price filters; sections span the full listing history with server-side quarterly windows and 2% outlier trims. Follow these steps exactly:
+Summarise current market conditions (asking prices and transaction trends) for <municipality>. entity_stats on listings/transactions is SECTION-based: each call computes ONE curated section id and costs 0.50 credits (the 4 core calls below ≈ 2 credits; the optional 5th makes it 2.50). Listings section filters accept ONLY municipality / district / canton / postal_code / bbox + property_type (an ARRAY) + deal_type ("sale" | "rent", REQUIRED) + date_from / date_to (ISO with T+Z) + active (boolean) — no rooms/price filters. For CURRENT market levels add active: true; for a recent-window read add date_from (e.g. 12 months back); omit both for the full 2006–present history. Follow these steps exactly:
 
 1. RENT LEVELS BY ROOM COUNT (one call, 0.50 cr)
    Call entity_stats with:
-   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "rent" },
+   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "rent", active: true },
      section: "price_per_room" }
+   (active: true = the CURRENT asking market. If the section returns too few listings for a small commune, retry without active but with date_from 12 months back.)
    Extract: all-rooms median/average rent, median rent per room band, and the property-type mix (per-type counts).
 
 2. SALE PRICE LEVELS PER M² (one call, 0.50 cr)
    Call entity_stats with:
-   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale" },
+   { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale", active: true },
      section: "city_analysis" }
    Extract: price/m² stats (avg/std-dev), the p5–p95 percentile fan, and the per-property-type median. (city_analysis works at municipality level; price_geography does NOT — it only drills below a canton or district filter.)
 
