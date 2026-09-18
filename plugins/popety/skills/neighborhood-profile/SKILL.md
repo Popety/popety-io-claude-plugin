@@ -32,7 +32,9 @@ Build a livability and investment-context profile for the neighborhood around "<
    { lat: <lat>, lon: <lon> }
    Summary mode returns nine scored amenity categories (schools, shops, transit, health, …) with the nearest examples.
 
-4. THE DOCUMENT
+4. THE DOCUMENT (blueprint — follow the kit)
+   - Verdict + 4 KPIs: transit score · noise dB · communal tax multiplier · the strongest amenity score
+   - Amenity categories as a scored bar list (pois_nearby), each with its nearest concrete example; hazards as badges (good/warn/danger)
    Themes to cover (group related ones into sections):
    - People: population, median income, average household size (demographics)
    - Economy: employment figures (employment)
@@ -47,6 +49,7 @@ Build a livability and investment-context profile for the neighborhood around "<
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -56,3 +59,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

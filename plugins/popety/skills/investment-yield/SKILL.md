@@ -34,16 +34,17 @@ Assess the gross rental yield of the Swiss property at "<address>". Follow these
    Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "rent" }, section: "city_analysis" }.
    (Sections take NO active/date/rooms filters — deal_type is required.) Read the city's monthly rent per m² stats and percentile fan and compare the model rent per m² to them. Figures span the full listing history, 2% trimmed.
 
-5. THE DOCUMENT
-   Cover:
-   - Gross yield: <yield_pct_lower>% – <yield_pct_upper>% (from the estimate)
-   - Model rent: CHF <rent>/month vs current asking rents per m² in the commune
-   - Verdict: is the implied yield above or below the local asking-rent picture?
+5. THE DOCUMENT (blueprint — follow the kit)
+   - Verdict + yield card: gross yield as a RANGE VISUAL (<yield_pct_lower>% – <yield_pct_upper>%, kit band primitive) with the commune's implied asking yield marked for comparison
+   - "Rent check": model rent vs current asking rents per m² in the commune (duo cards)
+   - A small sensitivity line: yield at rent −10% / model / +10% — computed, labelled as scenarios
+   - Verdict paragraph: above or below the local asking picture, and what would have to be true to hit the upper bound
    Notes-line material: asking rents ≠ realised rents; the yield is GROSS — it ignores charges, vacancy, maintenance, and taxes; this is an AI estimate, not investment advice or a formal appraisal.
 
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -53,3 +54,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

@@ -37,7 +37,7 @@ Shortlist current on-market sale listings in <municipality> for a client. Follow
 4. THE DOCUMENT
    Structure the shortlist document as:
    - Title + a one-line recap of the brief (location, deal type, budget, rooms).
-   - Shortlist: each listing with price, rooms, living area m², price per m², address, listing age (from listing_timestamp), and the url when present — plus bedrooms and parking (spaces/types) where present. Client briefs are often written in bedrooms: match against bedrooms when present but NEVER exclude listings missing it (coverage ~1 in 3; absence = unknown, not zero).
+   - Shortlist as PHOTO CARDS (kit card primitive): the listing's first image (urls_image[0]), price bold, then rooms · m² · CHF/m² · bedrooms and parking where present · listing age — and the portal link (portals[].url) as "View on <portal>". Client briefs are often written in bedrooms: match against bedrooms when present but NEVER exclude listings missing it (coverage ~1 in 3; absence = unknown, not zero).
    - Standouts: the best fits and why, flagging listings priced above the commune's asking median — optionally cross-check with entity_stats { entity_type: "listings", filters: { municipality: "<municipality>", deal_type: "sale" }, section: "price_per_room" } (0.50 credits) and compare each listing to the median of its room band (section figures span the full listing history, not only active ads).
    - Next-step line: offer the neighborhood_profile prompt on a favourite or the value_estimate prompt to sanity-check an asking price — whichever fits the brief.
    Notes-line material: results are advertised listings — availability changes fast; verify with the lister before presenting to the client.
@@ -45,6 +45,7 @@ Shortlist current on-market sale listings in <municipality> for a client. Follow
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -54,3 +55,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

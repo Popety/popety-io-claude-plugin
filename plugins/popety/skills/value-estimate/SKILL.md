@@ -37,17 +37,17 @@ Estimate the market value of the Swiss property at "<address>". Follow these ste
 5. COMPARABLE TRANSACTIONS (only where recorded)
    Transaction records cover French-speaking cantons and Ticino; Zürich and most DE-CH areas have none — skip this step there and rely on the listings cross-check. Where covered, call search_entities with { entity_type: "transactions", filters: { municipality: <municipality>, date_from: "<2 years ago>", step_name: "sale" } } and select up to 5 comparables.
 
-6. THE DOCUMENT
-   Cover:
-   - Estimated value: CHF <value> (range: CHF <low> – CHF <high>)
-   - Estimated rent: CHF <rent>/month
-   - Price per m²: CHF <ppm2> vs current asking median in the commune
-   - Comparables: transactions where available, otherwise active-listing stats
+6. THE DOCUMENT (blueprint — follow the kit)
+   - Verdict + estimate card: the value as a RANGE VISUAL (lower–mid–upper band with the mid marked, kit band+tick primitive) and the confidence band named
+   - 4 KPIs: estimated value · CHF/m² vs the commune's asking median · estimated rent/month · implied gross yield
+   - "Against the market": the property's CHF/m² plotted against the commune percentile fan (city_analysis) — say WHERE in the market it sits
+   - "Comparables": transactions where available, otherwise active-listing stats
    Notes-line material: AI estimate from the confirmed attributes and market data, not a formal appraisal; listing figures are ASKING prices (typically above realised prices); in non-disclosure cantons (VD/VS/FR/TI) transaction prices are largely unpublished and confidence bands are wider.
 
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -57,3 +57,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

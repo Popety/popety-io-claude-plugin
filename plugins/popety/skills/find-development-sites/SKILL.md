@@ -34,13 +34,14 @@ Find under-exploited parcels with development potential in <commune or canton>. 
    For the 3 highest-scoring parcels, call get_land with { land_id: <land_id>, include: ["zoning"] }.
    Note: zone name (main_lupa_name), authorized IUS (ius_authorized) vs what is currently built — the gap is the densification headroom.
 
-4. THE DOCUMENT
-   Rank the shortlist; per parcel: code_number + land_id, commune, area m², under-exploited score, development score, zone + IUS, and one line on WHY it is under-exploited (e.g. low built density vs authorized IUS).
+4. THE DOCUMENT (blueprint — follow the kit)
+   Ranked parcel CARDS (kit card primitive): per parcel code_number + land_id, commune, area m², the two scores as GAUGES (under-exploited, development), zone + IUS, and one line on WHY it is under-exploited (built density vs authorized IUS — estimate the headroom in m² where the indices allow). Open with a verdict naming the one or two credible targets and why the rest rank lower.
    Notes-line material: under-exploited and development scores are Popety proprietary indicators, not building permits. Next step: run the feasibility_snapshot prompt on the best candidate to check zoning rules, restrictions, and hazards before acting.
 
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -50,3 +51,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

@@ -33,12 +33,18 @@ Assess the buildability and planning constraints of the Swiss parcel at "<addres
 4. ZONING REGULATIONS
    Call search_regulations with { land_id: <land_id> } to retrieve applicable communal and cantonal planning rules for this zone.
 
-5. THE DOCUMENT
-   Cover: buildability (zone type, IUS, max floors, permitted uses), key constraints (RDPPF restrictions, hazard levels, noise), access quality, and regulatory specifics from the regulation excerpts. The verdict is whether — and how much — the parcel can be developed; flag anything that materially limits that potential.
+5. THE DOCUMENT (blueprint — follow the kit)
+   - Verdict: can it be developed, and how much — with the capacity MATH shown: authorized floor area (parcel area × IUS/IBUS) vs built today, and the headroom in m² (the land indices carry current-use ratios — use them)
+   - 4 KPIs: zone + IUS · capacity headroom m² · under-exploited score (gauge) · hazard level
+   - "Zoning & rules": zone card with max floors/height/dwellings and the cited regulation articles (document + article + page) — the citations ARE the value
+   - "Constraints": RDPPF restrictions and hazard/noise levels as badges (good/warn/danger), each with its one-line implication
+   - "Access & context": transit and noise in one strip
+   Analyst paragraphs: what materially limits the potential and what to verify next (servitudes, PPE constitution, neighbour oppositions).
 
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
 - Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- The reader is a real-estate professional (broker, investor, developer). Every section closes with ONE analyst paragraph stating the professional implication — pricing, absorption, sourcing, underwriting — never a definition or a tutorial sentence. Show sample sizes and visibly de-emphasise figures resting on fewer than 3 observations.
 - 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
 - Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
 - Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
@@ -48,3 +54,7 @@ PRESENTATION — how to write the final answer (applies to every step above):
 ---
 
 Requires the Popety connector (bundled with this plugin — authenticate on first use). Follow the workflow's cost gates: free/preview steps before any paid call.
+
+## Building the document
+
+When the client supports artifacts, render the final document as an artifact built from `references/popety-kit.html` (bundled with this skill): read the kit FIRST and follow its tokens, primitives, helpers and rules verbatim — Popety brand, both themes, Swiss number formats, inline-SVG charts with tooltips, one analyst paragraph per section written for a real-estate professional. Without artifact support, apply the same structure in clean markdown.

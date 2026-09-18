@@ -1,0 +1,236 @@
+<!--
+  POPETY ARTIFACT KIT — the visual identity for every document a Popety skill
+  produces. Locked by the founder on 2026-09-18 against two reference
+  documents (rental + purchase market overviews, live Pully data).
+
+  HOW TO USE (for the model building an artifact):
+  1. Copy the <style> block below verbatim as the document's stylesheet.
+  2. Assemble the page from the PRIMITIVES (exact markup patterns below):
+     brandbar → h1 + dateline → verdict → KPI row → sections (h2) with
+     charts/figures → notes → next-step → footer.
+  3. Use the JS HELPERS for charts. All charts are inline SVG, data-driven,
+     with hover tooltips. Never import a chart library.
+  4. RULES (non-negotiable):
+     - Swiss formats: CHF 1'250'000 (apostrophe thousands, use fmt()), m²,
+       CHF/m². Big prices may compress to 2.25M via fmtM().
+     - Every section closes with ONE analyst paragraph (<p class="body">)
+       written for a real-estate professional — pricing, absorption,
+       sourcing, underwriting implications. Never a definition or a
+       tutorial sentence.
+     - Fade any figure resting on fewer than 3 observations (class "thin"
+       or opacity .55) and show n everywhere ("(13)" / "13 ads").
+     - Both themes ship automatically via the CSS tokens — never hardcode
+       a color outside the tokens.
+     - Single accent = Popety cyan. Comparisons of 2+ series use, in fixed
+       order: #00ADE6, #E8A33D, #5856D6, #D4557A (light) /
+       #0099CE, #C2852B, #6E6CDB, #CC5E80 (dark) — validated palettes,
+       always direct-labeled.
+     - Charts: recessive hairline grid, direct value labels (bold, ink),
+       counts in faint, no legend for a single series, a <details> table
+       fallback under every data-dense chart.
+     - Titles: h1 = "<Commune/Property> — <what this document is>";
+       dateline = region · date · "live listings, Popety.io index" (or the
+       relevant dataset); verdict = one bold claim + two supporting figures.
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  :root {
+    --paper:#FFFFFF; --panel:#FAFAFA; --ink:#1A1A1A; --muted:#6B6B6B; --faint:#9A9A9A;
+    --hair:#E5E5E5; --brand:#00ADE6; --brand-soft:#E6F7FC;
+    --c1:#00ADE6; --c2:#E8A33D; --c3:#5856D6; --c4:#D4557A;
+    --band:rgba(0,173,230,.16); --tick:#0087B8; --line:#0087B8;
+    --heat0:rgba(0,173,230,.07); --heat1:rgba(0,173,230,.16); --heat2:rgba(0,173,230,.30); --heat3:rgba(0,135,184,.46);
+    --good:#00B341; --warn:#FF9500; --danger:#FF3B30;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#12181D; --panel:#1A222A; --ink:#E8EAE5; --muted:#9AA4AC; --faint:#6E7A83;
+      --hair:#2A343D; --brand:#29B8E8; --brand-soft:#0E2A36;
+      --c1:#0099CE; --c2:#C2852B; --c3:#6E6CDB; --c4:#CC5E80;
+      --band:rgba(0,153,206,.22); --tick:#4FC3EC; --line:#4FC3EC;
+      --heat0:rgba(0,153,206,.10); --heat1:rgba(0,153,206,.20); --heat2:rgba(0,153,206,.34); --heat3:rgba(79,195,236,.48);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#12181D; --panel:#1A222A; --ink:#E8EAE5; --muted:#9AA4AC; --faint:#6E7A83;
+    --hair:#2A343D; --brand:#29B8E8; --brand-soft:#0E2A36;
+    --c1:#0099CE; --c2:#C2852B; --c3:#6E6CDB; --c4:#CC5E80;
+    --band:rgba(0,153,206,.22); --tick:#4FC3EC; --line:#4FC3EC;
+    --heat0:rgba(0,153,206,.10); --heat1:rgba(0,153,206,.20); --heat2:rgba(0,153,206,.34); --heat3:rgba(79,195,236,.48);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Poppins',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.55; }
+  .wrap { max-width:900px; margin:0 auto; padding:40px 24px 72px; }
+  .brandbar { display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    border-bottom:3px solid var(--brand); padding-bottom:10px; margin-bottom:26px; }
+  .wordmark { font-weight:700; font-size:17px; letter-spacing:-.01em; }
+  .wordmark span { color:var(--brand); }
+  .kicker { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  h1 { font-size:clamp(26px,4.4vw,34px); font-weight:600; letter-spacing:-.02em;
+    line-height:1.12; margin:0 0 6px; text-wrap:balance; }
+  .dateline { color:var(--muted); font-size:13px; margin-bottom:16px; }
+  .verdict { border-left:3px solid var(--brand); background:var(--brand-soft);
+    padding:13px 18px; border-radius:0 4px 4px 0; font-size:15.5px; max-width:66ch; margin:0 0 30px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:38px; }
+  .kpi { background:var(--panel); border:1px solid var(--hair); border-radius:6px; padding:14px 16px 12px; }
+  .kpi b { display:block; font-size:24px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .kpi b small { font-size:13px; font-weight:500; color:var(--muted); }
+  .kpi span { font-size:12px; color:var(--muted); }
+  h2 { font-size:18px; font-weight:600; letter-spacing:-.01em; margin:42px 0 4px; }
+  h2::before { content:''; display:inline-block; width:22px; height:3px; background:var(--brand);
+    border-radius:2px; margin-right:10px; vertical-align:4px; }
+  .sub { color:var(--muted); font-size:13px; margin:0 0 14px; }
+  p.body { max-width:70ch; margin:10px 0; }
+  figure { margin:14px 0 6px; }
+  .chart { width:100%; height:auto; display:block; }
+  .cap { font-size:12px; color:var(--faint); margin-top:6px; max-width:74ch; }
+  svg text { font-family:'Poppins',-apple-system,sans-serif; }
+  .seg { display:inline-flex; border:1px solid var(--hair); border-radius:6px; overflow:hidden; margin:2px 0 10px; }
+  .seg button { border:0; background:var(--panel); color:var(--muted); font:inherit; font-size:12.5px;
+    font-weight:500; padding:6px 14px; cursor:pointer; }
+  .seg button[aria-pressed="true"] { background:var(--brand); color:#fff; }
+  .seg button:focus-visible { outline:2px solid var(--brand); outline-offset:-2px; }
+  details.tbl { margin:8px 0 0; font-size:12.5px; }
+  details.tbl summary { color:var(--muted); cursor:pointer; }
+  details.tbl summary:focus-visible { outline:2px solid var(--brand); outline-offset:2px; border-radius:2px; }
+  details.tbl table { border-collapse:collapse; margin-top:8px; }
+  details.tbl td, details.tbl th { padding:3px 12px 3px 0; text-align:right; border-bottom:1px solid var(--hair); font-variant-numeric:tabular-nums; }
+  details.tbl th { color:var(--muted); font-weight:500; }
+  details.tbl td:first-child, details.tbl th:first-child { text-align:left; }
+  .heat { width:100%; border-collapse:separate; border-spacing:3px; margin:6px 0 2px; }
+  .heat th { font-size:11.5px; font-weight:500; color:var(--muted); padding:4px 6px; text-align:right; }
+  .heat th:first-child { text-align:left; }
+  .heat td { border-radius:4px; padding:8px 10px 6px; text-align:right; min-width:78px; }
+  .heat td b { display:block; font-size:13.5px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .heat td span { font-size:10.5px; color:var(--muted); }
+  .heat td.empty { background:transparent; color:var(--faint); text-align:center; }
+  .heat td.thin b { opacity:.55; }
+  .heat-scroll { overflow-x:auto; }
+  .duo { display:flex; gap:12px; flex-wrap:wrap; margin:14px 0 4px; }
+  .duocard { flex:1 1 200px; background:var(--panel); border:1px solid var(--hair); border-radius:6px; padding:14px 16px; position:relative; }
+  .duocard b { font-size:21px; font-weight:600; font-variant-numeric:tabular-nums; display:block; }
+  .duocard span { font-size:12px; color:var(--muted); }
+  .delta { position:absolute; top:12px; right:12px; background:var(--brand-soft); color:var(--tick);
+    font-size:12px; font-weight:600; padding:2px 9px; border-radius:99px; }
+  .badge { display:inline-block; font-size:11px; font-weight:600; padding:2px 10px; border-radius:99px;
+    background:var(--brand-soft); color:var(--tick); margin:0 6px 6px 0; }
+  .badge.warn { background:rgba(255,149,0,.12); color:var(--warn); }
+  .badge.danger { background:rgba(255,59,48,.12); color:var(--danger); }
+  .badge.good { background:rgba(0,179,65,.12); color:var(--good); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin:16px 0; }
+  .card { background:var(--panel); border:1px solid var(--hair); border-radius:8px; overflow:hidden; }
+  .card img { width:100%; height:150px; object-fit:cover; display:block; background:var(--hair); }
+  .card .cbody { padding:12px 14px; }
+  .card .cprice { font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .card .cmeta { font-size:12px; color:var(--muted); margin-top:2px; }
+  .card a { color:var(--brand); font-size:12px; text-decoration:none; }
+  .gauge { height:10px; background:var(--hair); border-radius:99px; overflow:hidden; margin:6px 0 2px; }
+  .gauge i { display:block; height:100%; background:var(--brand); border-radius:99px; }
+  .notes { margin-top:44px; padding-top:14px; border-top:1px solid var(--hair);
+    font-size:12.5px; color:var(--muted); max-width:74ch; }
+  .next { margin-top:14px; font-size:13.5px; }
+  .next code { background:var(--panel); border:1px solid var(--hair); border-radius:4px; padding:1px 7px;
+    font-family:ui-monospace,Menlo,monospace; font-size:12px; }
+  footer { margin-top:40px; font-size:11.5px; color:var(--faint); display:flex; gap:18px; flex-wrap:wrap; }
+  #tip { position:fixed; pointer-events:none; background:var(--ink); color:var(--paper);
+    font-size:12px; padding:5px 10px; border-radius:4px; opacity:0; transition:opacity .12s; z-index:9; max-width:280px; }
+  @media (prefers-reduced-motion: reduce) { #tip { transition:none; } }
+</style>
+
+<!-- ======================= PRIMITIVES (markup patterns) =======================
+
+BRANDBAR + HEADER (every document starts exactly like this):
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="wordmark">popety<span>.io</span></div>
+      <div class="kicker">Rental market overview</div>   ← the document type
+    </div>
+    <h1>Pully — the rental market today</h1>
+    <div class="dateline">Canton de Vaud · 18 September 2026 · live listings, Popety.io index</div>
+    <p class="verdict"><strong>One bold market claim.</strong> Two supporting figures in a sentence.</p>
+
+KPI ROW (exactly 4 tiles):
+  <div class="kpis">
+    <div class="kpi"><b>CHF 2'200</b><span>Median apartment rent / month · 121 live ads</span></div>
+    ...
+  </div>
+
+SECTION (h2 + sub + figure + cap + analyst paragraph):
+  <h2>Rent by rooms</h2>
+  <p class="sub">Live apartment listings · median asking rent by room count</p>
+  <figure><svg class="chart" ...></svg>
+    <div class="cap">One factual reading of the chart.</div>
+    <details class="tbl"><summary>View as table</summary><table>...</table></details>
+  </figure>
+  <p class="body">The analyst paragraph — a professional implication, not a description.</p>
+
+UNIT TOGGLE (when two unit views of the same data exist):
+  <div class="seg" role="group" aria-label="Rent unit">
+    <button id="uMonth" aria-pressed="true">CHF / month</button>
+    <button id="uM2" aria-pressed="false">CHF / m²</button>
+  </div>
+
+HEATMAP (rooms × surface, or any 2-dim matrix): table.heat, cells shaded via the
+--heat0..3 tokens by value band, "N ads" under each figure, class "thin" for n<3,
+class "empty" + "–" for empty cells; wrap in .heat-scroll.
+
+DUO CARDS (two headline figures side by side, optional .delta chip):
+  <div class="duo"><div class="duocard"><b>CHF 15'170/m²</b><span>Apartments · 78 ads</span></div>...</div>
+
+LISTING CARDS (shortlists with photos — listing_hunter):
+  <div class="cards"><div class="card"><img src="..." alt="">
+    <div class="cbody"><div class="cprice">CHF 2'450/mo</div>
+    <div class="cmeta">3.5 rooms · 82 m² · 2 bedrooms · parking</div>
+    <a href="...">View on homegate.ch</a></div></div>...</div>
+
+BADGES (restrictions, hazards, statuses): <span class="badge warn">Flood — low</span>
+GAUGE (capacity/score bars): <div class="gauge"><i style="width:34%"></i></div>
+
+CLOSING (every document ends exactly like this):
+  <div class="notes"><strong>Notes.</strong> One line of caveats (asking ≠ realised, coverage…).</div>
+  <div class="next"><strong>Next step:</strong> one offer — <code>/popety:...</code></div>
+  <footer><span>Data: Popety.io … · live snapshot DATE</span><span>popety.io — Swiss real-estate intelligence</span></footer>
+  </div>
+  <div id="tip" role="status"></div>
+============================================================================ -->
+
+<script>
+  // ======================= HELPERS (copy verbatim) =======================
+  const fmt = (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+  const fmtM = (v) => v >= 1000000 ? (v / 1000000).toFixed(2) + 'M' : fmt(v);
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const el = (n, a, parent) => { const e = document.createElementNS(svgNS, n);
+    for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; };
+
+  // BAND-ROW CHART (median + p30–p70 band per category — rents/prices by rooms):
+  // per row at y: band rect fill var(--band) from px(p30) to px(p70), h=14 rx=4;
+  // median tick rect w=3 h=18 rx=1.5 fill var(--tick); value label bold ink at
+  // px(max(p70,med))+10; count "(n)" in faint after it; row label right-aligned
+  // at x=142 in muted; vertical hairline grid per tick with axis labels below;
+  // fade band+tick+value to ~.55 when n<3; g.hov with data-tip per row.
+
+  // LINE / TREND CHART (quarterly medians): area fill polyline var(--band) op .5
+  // + stroke polyline var(--line) w=2.5; horizontal hairline grid + y labels;
+  // year labels every 4th point; annotate the peak/trough (open circle + bold
+  // label) and ALWAYS emphasise the last point (filled r=5 + "Qx 20xx · value");
+  // transparent r=9 hover circles per point with data-tip.
+
+  // SIMPLE BAR ROWS (DOM bands, mixes, area ladders): rect fill var(--c1) rx=4
+  // h=16 from x0 to px(value); bold % or value label after the bar, "(n)" faint.
+
+  // TOOLTIP LAYER (always include, verbatim):
+  const tip = document.getElementById('tip');
+  document.addEventListener('pointermove', (e) => {
+    const t = e.target.closest('.hov');
+    const d = t && t.dataset.tip;
+    if (d) {
+      tip.textContent = d;
+      tip.style.left = Math.min(e.clientX + 14, window.innerWidth - 280) + 'px';
+      tip.style.top = (e.clientY + 16) + 'px';
+      tip.style.opacity = '1';
+    } else { tip.style.opacity = '0'; }
+  });
+</script>
