@@ -19,8 +19,7 @@
         "path": "plugins/popety",
         "ref": "main"
       },
-      "description": "Swiss real-estate intelligence: 9 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
-      "version": "1.0.0",
+      "description": "Swiss real-estate intelligence: 8 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
       "author": {
         "name": "Popety.io"
       },
