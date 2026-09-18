@@ -21,13 +21,13 @@ Assess the gross rental yield of the Swiss property at "<address>". Follow these
 
 1. RESOLVE THE PROPERTY (free)
    Call estimate_property with { address: "<address>" } (no confirm flag).
-   This returns the register facts and the unit attributes still required: living_area, rooms_nb, bathroom_nb.
+   This returns the register facts and the unit attributes still required: living_area, rooms_nb, bathroom_nb — plus construction_year when the register has no building year.
 
 2. CONFIRM ATTRIBUTES WITH THE USER
-   Ask the user for living_area, rooms_nb, and bathroom_nb (or confirm the returned suggestion for single-dwelling buildings). NEVER guess or invent them.
+   Ask the user for EVERY attribute listed in required_attributes (or confirm the returned suggestion for single-dwelling buildings). NEVER guess or invent them.
 
 3. RUN THE VALUATION (paid, 3 credits)
-   Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb } }.
+   Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb, construction_year (if required) } }.
    Extract: estimated purchase price, estimated monthly rent, and the gross yield band yield_pct_lower / yield_pct_upper.
 
 4. MARKET-RENT CONTEXT (0.50 credits)

@@ -21,13 +21,13 @@ Estimate the market value of the Swiss property at "<address>". Follow these ste
 
 1. RESOLVE THE PROPERTY (free)
    Call estimate_property with { address: "<address>" } (no confirm flag).
-   This returns the register facts (address, building year, category) and the unit attributes still required: living_area, rooms_nb, bathroom_nb.
+   This returns the register facts (address, building year, category) and the unit attributes still required: living_area, rooms_nb, bathroom_nb — plus construction_year when the register has no building year (common: ~40% of buildings).
 
 2. CONFIRM ATTRIBUTES WITH THE USER
-   Ask the user for the required attributes (or confirm the returned suggestion for single-dwelling buildings). NEVER guess or invent them — the valuation is only as good as these inputs.
+   Ask the user for EVERY attribute listed in required_attributes (or confirm the returned suggestion for single-dwelling buildings). NEVER guess or invent them — the valuation is only as good as these inputs.
 
 3. RUN THE VALUATION (paid, 3 credits)
-   Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb, ... } }.
+   Call estimate_property again with the same target plus { confirm: true, property_attributes: { living_area, rooms_nb, bathroom_nb, construction_year (if required), ... } }.
    Extract: estimated purchase price, estimated rent, price per m², and confidence band.
 
 4. CURRENT ASKING PRICES (cross-check — works everywhere, 0.50 credits)
