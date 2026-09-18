@@ -33,6 +33,10 @@
      - Charts: recessive hairline grid, direct value labels (bold, ink),
        counts in faint, no legend for a single series, a <details> table
        fallback under every data-dense chart.
+     - NEVER caption or describe a visual element you did not draw. Before
+       finishing, re-read every caption and check the referenced marks
+       (dots, bands, lines, colors) actually exist in the SVG — a caption
+       announcing "orange points" with no orange points is a defect.
      - Titles: h1 = "<Commune/Property> — <what this document is>";
        dateline = region · date · "live listings, Popety.io index" (or the
        relevant dataset); verdict = one bold claim + two supporting figures.
@@ -225,6 +229,14 @@ CLOSING (every document ends exactly like this):
 
   // SIMPLE BAR ROWS (DOM bands, mixes, area ladders): rect fill var(--c1) rx=4
   // h=16 from x0 to px(value); bold % or value label after the bar, "(n)" faint.
+
+  // ESTIMATE RANGE BAND (value/yield estimates): one horizontal band rect fill
+  // var(--band) from px(lower) to px(upper), h=16 rx=8; mid marked with a
+  // var(--tick) tick + bold label above; "Bas · x.xxM" / "Haut · x.xxM" under
+  // the ends. COMPARABLES on the band: filled circles r=5 fill var(--c2)
+  // (amber) at each comparable's price, each with a .hov tooltip naming it —
+  // draw them BEFORE writing any caption that mentions them, and only caption
+  // what is drawn.
 
   // TOOLTIP LAYER (always include, verbatim):
   const tip = document.getElementById('tip');
