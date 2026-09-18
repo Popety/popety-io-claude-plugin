@@ -51,11 +51,21 @@ Summarise current market conditions (asking prices and transaction trends) for <
      section: "transaction_types" }
    Extract: share of true market sales vs inheritance/transfer types.
 
-6. SUMMARY — present as a compact market dashboard
-   - Rental: median rent by rooms, all-rooms median/average, type mix
-   - Sale: price/m² stats + percentile fan, per-type medians, new-build share + premium
+6. THE DOCUMENT
+   Sections to cover:
+   - Rental market: median rent by rooms, all-rooms median/average, type mix
+   - Sale market: price/m² stats + percentile fan, per-type medians, new-build share + premium
    - Transactions (covered cantons only): count per year (last 5), price trend (GE/NE/JU only), mix of sale vs inheritance/transfer types
-   Cite data gaps where applicable (non-disclosure canton, sparse data; asking prices are advertised, not realised, and section figures span the full listing history — read the latest quarters for the current picture). Offer deeper dives: /popety:find-development-sites to source under-exploited parcels, /popety:investment-yield for a specific property.
+   Read the latest quarters for the current picture — section figures span the full listing history. Notes-line material: non-disclosure canton, sparse data, asking prices are advertised, not realised. Next-step candidates: /popety:find-development-sites to source under-exploited parcels, or /popety:investment-yield for a specific property — offer the more relevant one.
+
+PRESENTATION — how to write the final answer (applies to every step above):
+- The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
+- Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
+- Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
+- Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
+- Close the document with at most ONE "Next step" line offering the single most relevant follow-up — an offer, not a menu.
+- In clients that support artifacts/canvas, render the document as a styled artifact (clean typography, generous spacing, no emojis) and keep the chat reply to a two-line summary; otherwise use clean markdown with real headings.
 
 ---
 

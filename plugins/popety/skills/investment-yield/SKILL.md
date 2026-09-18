@@ -34,11 +34,21 @@ Assess the gross rental yield of the Swiss property at "<address>". Follow these
    Call entity_stats with { entity_type: "listings", filters: { municipality: <municipality>, deal_type: "rent" }, section: "city_analysis" }.
    (Sections take NO active/date/rooms filters — deal_type is required.) Read the city's monthly rent per m² stats and percentile fan and compare the model rent per m² to them. Figures span the full listing history, 2% trimmed.
 
-5. PRESENT THE YIELD
+5. THE DOCUMENT
+   Cover:
    - Gross yield: <yield_pct_lower>% – <yield_pct_upper>% (from the estimate)
    - Model rent: CHF <rent>/month vs current asking rents per m² in the commune
    - Verdict: is the implied yield above or below the local asking-rent picture?
-   - Caveats: asking rents ≠ realised rents; the yield is GROSS — it ignores charges, vacancy, maintenance, and taxes; this is an AI estimate, not investment advice or a formal appraisal.
+   Notes-line material: asking rents ≠ realised rents; the yield is GROSS — it ignores charges, vacancy, maintenance, and taxes; this is an AI estimate, not investment advice or a formal appraisal.
+
+PRESENTATION — how to write the final answer (applies to every step above):
+- The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
+- Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
+- Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
+- Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
+- Close the document with at most ONE "Next step" line offering the single most relevant follow-up — an offer, not a menu.
+- In clients that support artifacts/canvas, render the document as a styled artifact (clean typography, generous spacing, no emojis) and keep the chat reply to a two-line summary; otherwise use clean markdown with real headings.
 
 ---
 

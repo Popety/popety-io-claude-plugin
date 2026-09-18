@@ -37,12 +37,22 @@ Estimate the market value of the Swiss property at "<address>". Follow these ste
 5. COMPARABLE TRANSACTIONS (only where recorded)
    Transaction records cover French-speaking cantons and Ticino; Zürich and most DE-CH areas have none — skip this step there and rely on the listings cross-check. Where covered, call search_entities with { entity_type: "transactions", filters: { municipality: <municipality>, date_from: "<2 years ago>", step_name: "sale" } } and select up to 5 comparables.
 
-6. PRESENT THE ESTIMATE
+6. THE DOCUMENT
+   Cover:
    - Estimated value: CHF <value> (range: CHF <low> – CHF <high>)
    - Estimated rent: CHF <rent>/month
    - Price per m²: CHF <ppm2> vs current asking median in the commune
    - Comparables: transactions where available, otherwise active-listing stats
-   - Methodology caveat: the estimate is AI-generated from the confirmed property attributes and market data; it does not substitute for a formal appraisal. Listing figures are ASKING prices (typically above realised prices). In non-disclosure cantons (VD/VS/FR/TI), transaction prices are largely unpublished and confidence bands are wider.
+   Notes-line material: AI estimate from the confirmed attributes and market data, not a formal appraisal; listing figures are ASKING prices (typically above realised prices); in non-disclosure cantons (VD/VS/FR/TI) transaction prices are largely unpublished and confidence bands are wider.
+
+PRESENTATION — how to write the final answer (applies to every step above):
+- The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.
+- Open with a title line (subject + commune + date) and a one-line verdict a reader would pay for. Never open with method, tool narration, or what you are about to do.
+- 3–6 titled sections, ordered by what matters most to the reader; one idea per section. Prefer short prose with embedded figures; use a table only when comparing 3+ items across 2+ dimensions, max ~6 rows, one comparison per table. Select the figures that change the reader's decision — do not dump every number you retrieved.
+- Swiss formats: CHF 1'250'000 (apostrophe thousands), m², CHF/m²; official Swiss real-estate terminology in the reader's language. Write the whole document in the language the user wrote in.
+- Caveats: at most ONE short "Notes" line at the end of the document (e.g. coverage gaps, asking ≠ realised prices). Never inline a disclaimer after a figure. Never mention tools, credits, section ids, API mechanics, or observations "for the platform team" inside the document — if you have a genuine data/product observation, put it after the document under a separate "---" divider, in one or two lines.
+- Close the document with at most ONE "Next step" line offering the single most relevant follow-up — an offer, not a menu.
+- In clients that support artifacts/canvas, render the document as a styled artifact (clean typography, generous spacing, no emojis) and keep the chat reply to a two-line summary; otherwise use clean markdown with real headings.
 
 ---
 
