@@ -4,9 +4,13 @@
   documents (rental + purchase market overviews, live Pully data).
 
   HOW TO USE (for the model building an artifact):
-  1. NON-NEGOTIABLE: paste the ENTIRE <style> block below, verbatim and
-     unmodified, as the document's stylesheet. Never write your own CSS, never
-     re-style in neutral greys. SELF-CHECK before finishing: if the rendered
+  1. NON-NEGOTIABLE: the deliverable is ONE self-contained HTML document.
+     When the host offers artifact types (claude.ai / Desktop), create an
+     HTML artifact — NEVER React/JSX: the kit is an HTML+CSS system and a
+     JSX rewrite loses this stylesheet, which is exactly how grey documents
+     happen. Paste the ENTIRE <style> block below, verbatim and unmodified,
+     as the document's stylesheet. Never write your own CSS, never re-style
+     in neutral greys. SELF-CHECK before finishing: if the rendered
      document shows no Popety cyan (#00ADE6 — brandbar border, wordmark accent,
      verdict block, chart fills, KPI accents), you did not use the kit: start
      over from this style block.
@@ -24,8 +28,16 @@
        tutorial sentence.
      - Fade any figure resting on fewer than 3 observations (class "thin"
        or opacity .55) and show n everywhere ("(13)" / "13 ads").
-     - Both themes ship automatically via the CSS tokens — never hardcode
-       a color outside the tokens.
+     - Both themes ship automatically via the CSS tokens — in CSS, never
+       hardcode a color outside the tokens.
+     - SVG marks are the exception and carry the color TWICE: a literal hex
+       fill/stroke attribute (light palette) PLUS the matching mark class
+       (mk1–mk4, mkband, mktick, mkline). The class wins when the stylesheet
+       is present and keeps dark mode correct; the attribute keeps the brand
+       alive if a host strips the stylesheet. fill="var(--…)" alone renders
+       BLACK without its token — that is the black-and-white-document defect.
+       Example: <rect fill="#00ADE6" class="mk1" …>, <circle fill="#E8A33D"
+       class="mk2" …>, band <rect fill="rgba(0,173,230,.16)" class="mkband">.
      - Single accent = Popety cyan. Comparisons of 2+ series use, in fixed
        order: #00ADE6, #E8A33D, #5856D6, #D4557A (light) /
        #0099CE, #C2852B, #6E6CDB, #CC5E80 (dark) — validated palettes,
@@ -138,6 +150,13 @@
   .card a { color:var(--brand); font-size:12px; text-decoration:none; }
   .gauge { height:10px; background:var(--hair); border-radius:99px; overflow:hidden; margin:6px 0 2px; }
   .gauge i { display:block; height:100%; background:var(--brand); border-radius:99px; }
+  /* SVG mark classes — ALWAYS paired with the same color as a literal
+     fill/stroke attribute on the element (the attribute is the fallback if a
+     host strips this stylesheet; these classes win when present and keep
+     dark mode correct). */
+  .mk1 { fill:var(--c1); } .mk2 { fill:var(--c2); } .mk3 { fill:var(--c3); } .mk4 { fill:var(--c4); }
+  .mkband { fill:var(--band); } .mktick { fill:var(--tick); }
+  .mkline { stroke:var(--line); fill:none; } .mkarea { fill:var(--band); }
   .notes { margin-top:44px; padding-top:14px; border-top:1px solid var(--hair);
     font-size:12.5px; color:var(--muted); max-width:74ch; }
   .next { margin-top:14px; font-size:13.5px; }
@@ -215,26 +234,29 @@ CLOSING (every document ends exactly like this):
     for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; };
 
   // BAND-ROW CHART (median + p30–p70 band per category — rents/prices by rooms):
-  // per row at y: band rect fill var(--band) from px(p30) to px(p70), h=14 rx=4;
-  // median tick rect w=3 h=18 rx=1.5 fill var(--tick); value label bold ink at
+  // per row at y: band rect fill="rgba(0,173,230,.16)" class="mkband" from
+  // px(p30) to px(p70), h=14 rx=4; median tick rect w=3 h=18 rx=1.5
+  // fill="#0087B8" class="mktick"; value label bold ink at
   // px(max(p70,med))+10; count "(n)" in faint after it; row label right-aligned
   // at x=142 in muted; vertical hairline grid per tick with axis labels below;
   // fade band+tick+value to ~.55 when n<3; g.hov with data-tip per row.
 
-  // LINE / TREND CHART (quarterly medians): area fill polyline var(--band) op .5
-  // + stroke polyline var(--line) w=2.5; horizontal hairline grid + y labels;
+  // LINE / TREND CHART (quarterly medians): area polyline fill="rgba(0,173,230,.16)"
+  // class="mkarea" op .5 + polyline stroke="#0087B8" class="mkline" w=2.5; horizontal hairline grid + y labels;
   // year labels every 4th point; annotate the peak/trough (open circle + bold
   // label) and ALWAYS emphasise the last point (filled r=5 + "Qx 20xx · value");
   // transparent r=9 hover circles per point with data-tip.
 
-  // SIMPLE BAR ROWS (DOM bands, mixes, area ladders): rect fill var(--c1) rx=4
+  // SIMPLE BAR ROWS (DOM bands, mixes, area ladders): rect fill="#00ADE6"
+  // class="mk1" rx=4
   // h=16 from x0 to px(value); bold % or value label after the bar, "(n)" faint.
 
-  // ESTIMATE RANGE BAND (value/yield estimates): one horizontal band rect fill
-  // var(--band) from px(lower) to px(upper), h=16 rx=8; mid marked with a
-  // var(--tick) tick + bold label above; "Bas · x.xxM" / "Haut · x.xxM" under
-  // the ends. COMPARABLES on the band: filled circles r=5 fill var(--c2)
-  // (amber) at each comparable's price, each with a .hov tooltip naming it —
+  // ESTIMATE RANGE BAND (value/yield estimates): one horizontal band rect
+  // fill="rgba(0,173,230,.16)" class="mkband" from px(lower) to px(upper),
+  // h=16 rx=8; mid marked with a fill="#0087B8" class="mktick" tick + bold
+  // label above; "Bas · x.xxM" / "Haut · x.xxM" under the ends. COMPARABLES
+  // on the band: filled circles r=5 fill="#E8A33D" class="mk2" (amber) at
+  // each comparable's price, each with a .hov tooltip naming it —
   // draw them BEFORE writing any caption that mentions them, and only caption
   // what is drawn.
 
