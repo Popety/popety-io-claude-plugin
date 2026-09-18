@@ -39,7 +39,7 @@ Generate a concise land-registry report for the Swiss parcel at "<address>". Fol
    - Recent transactions: last 3 transactions (type, date, price if disclosed)
 
 4. NEXT STEP
-   Next-step candidates: value this property (/popety:value-estimate) or market conditions for the commune (/popety:market-overview) — offer the more relevant one, never run it automatically.
+   Next-step candidates: value this property (/popety:value-estimate) or market conditions for the commune (/popety:purchase-market-overview) — offer the more relevant one, never run it automatically.
 
 PRESENTATION — how to write the final answer (applies to every step above):
 - The answer is a client-ready document that will be shared as-is. Not a chat log, not an analysis diary.

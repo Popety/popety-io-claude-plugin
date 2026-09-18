@@ -34,7 +34,8 @@ via OAuth or a Popety API key (manage keys at https://developers.popety.io).
 | Command | What it does |
 | --- | --- |
 | `/popety:feasibility-snapshot` | Assess buildability, zoning and constraints of a Swiss parcel from an address. |
-| `/popety:market-overview` | Asking-price levels and transaction trends for a Swiss commune. |
+| `/popety:rental-market-overview` | Asking rents by rooms and per m², rent trend and inventory mix for a Swiss commune. |
+| `/popety:purchase-market-overview` | Asking sale prices per m²: distribution, per-type medians and multi-year trend for a Swiss commune. |
 | `/popety:parcel-report` | Full dossier for a parcel: zoning, restrictions, buildings, history and context. |
 | `/popety:value-estimate` | AVM valuation with user-confirmed attributes, cross-checked against the market. |
 | `/popety:find-development-sites` | Hunt under-exploited parcels with development potential in a commune or canton. |
