@@ -4,7 +4,12 @@
   documents (rental + purchase market overviews, live Pully data).
 
   HOW TO USE (for the model building an artifact):
-  1. Copy the <style> block below verbatim as the document's stylesheet.
+  1. NON-NEGOTIABLE: paste the ENTIRE <style> block below, verbatim and
+     unmodified, as the document's stylesheet. Never write your own CSS, never
+     re-style in neutral greys. SELF-CHECK before finishing: if the rendered
+     document shows no Popety cyan (#00ADE6 — brandbar border, wordmark accent,
+     verdict block, chart fills, KPI accents), you did not use the kit: start
+     over from this style block.
   2. Assemble the page from the PRIMITIVES (exact markup patterns below):
      brandbar → h1 + dateline → verdict → KPI row → sections (h2) with
      charts/figures → notes → next-step → footer.
@@ -68,14 +73,14 @@
     border-bottom:3px solid var(--brand); padding-bottom:10px; margin-bottom:26px; }
   .wordmark { font-weight:700; font-size:17px; letter-spacing:-.01em; }
   .wordmark span { color:var(--brand); }
-  .kicker { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .kicker { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brand); font-weight:600; }
   h1 { font-size:clamp(26px,4.4vw,34px); font-weight:600; letter-spacing:-.02em;
     line-height:1.12; margin:0 0 6px; text-wrap:balance; }
   .dateline { color:var(--muted); font-size:13px; margin-bottom:16px; }
   .verdict { border-left:3px solid var(--brand); background:var(--brand-soft);
     padding:13px 18px; border-radius:0 4px 4px 0; font-size:15.5px; max-width:66ch; margin:0 0 30px; }
   .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:38px; }
-  .kpi { background:var(--panel); border:1px solid var(--hair); border-radius:6px; padding:14px 16px 12px; }
+  .kpi { background:var(--panel); border:1px solid var(--hair); border-top:3px solid var(--brand); border-radius:6px; padding:13px 16px 12px; }
   .kpi b { display:block; font-size:24px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .kpi b small { font-size:13px; font-weight:500; color:var(--muted); }
   .kpi span { font-size:12px; color:var(--muted); }
@@ -94,7 +99,7 @@
   .seg button[aria-pressed="true"] { background:var(--brand); color:#fff; }
   .seg button:focus-visible { outline:2px solid var(--brand); outline-offset:-2px; }
   details.tbl { margin:8px 0 0; font-size:12.5px; }
-  details.tbl summary { color:var(--muted); cursor:pointer; }
+  details.tbl summary { color:var(--brand); cursor:pointer; font-weight:500; }
   details.tbl summary:focus-visible { outline:2px solid var(--brand); outline-offset:2px; border-radius:2px; }
   details.tbl table { border-collapse:collapse; margin-top:8px; }
   details.tbl td, details.tbl th { padding:3px 12px 3px 0; text-align:right; border-bottom:1px solid var(--hair); font-variant-numeric:tabular-nums; }
