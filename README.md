@@ -2,9 +2,10 @@
 
 # Popety.io Claude plugin
 
-Swiss real-estate intelligence for Claude — 9 guided workflows (parcel reports,
-valuations, market analysis, development sourcing) driving the official Popety.io
-connector. Installing the plugin bundles the connector and the workflow commands.
+Swiss real-estate intelligence for Claude — 9 guided workflows
+(parcel reports, valuations, market analysis, development sourcing) driving the
+official Popety.io connector. Installing the plugin bundles the connector and
+the workflow commands.
 
 This repository is a generated mirror of `integrations/claude-plugin/` in the
 Popety.io monorepo — do not edit here; changes are overwritten on the next publish.
@@ -45,3 +46,10 @@ via OAuth or a Popety API key (manage keys at https://developers.popety.io).
 
 Each command follows cost gates: free/preview steps run before any paid call, and
 valuations always confirm property attributes with you first.
+
+## Privacy Policy
+
+The bundled connector reads Swiss real-estate data from Popety.io's own APIs and
+never writes or collects conversation data beyond what each tool call needs.
+Privacy policy: https://www.popety.io/politique-de-confidentialite/ ·
+Support: support@popety.com
