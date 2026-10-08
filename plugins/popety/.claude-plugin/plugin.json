@@ -5,6 +5,8 @@
   "description": "Swiss real-estate intelligence: 9 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
   "version": "1.0.0",
   "privacyPolicyUrl": "https://www.popety.io/politique-de-confidentialite/",
+  "documentationUrl": "https://developers.popety.io/docs/mcp",
+  "supportUrl": "mailto:support@popety.com",
   "author": {
     "name": "Popety.io"
   },
