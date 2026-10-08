@@ -1,9 +1,10 @@
 {
   "$schema": "https://code.claude.com/schemas/plugin.json",
-  "$comment": "GENERATED FROM api/popety-mcp/src/prompts.ts — do not edit; run pnpm --filter @popety-io/mcp generate:integrations",
   "name": "popety",
   "displayName": "Popety.io",
   "description": "Swiss real-estate intelligence: 9 guided workflows (parcel reports, valuations, market analysis, development sourcing) driving the Popety.io connector.",
+  "version": "1.0.0",
+  "privacyPolicyUrl": "https://www.popety.io/politique-de-confidentialite/",
   "author": {
     "name": "Popety.io"
   },
